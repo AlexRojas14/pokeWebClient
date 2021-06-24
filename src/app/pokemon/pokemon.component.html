@@ -1,0 +1,33 @@
+<div class="card main-card-margin">
+  <h3 class="card-header text-white bg-primary">
+    Escriba un Pokemon...
+  </h3>
+
+  <div class="card-body">
+    <div class="input-group mb-3 search-input-padding">
+      <input type="text"
+             class="form-control"
+             placeholder="Pokemon..."
+             aria-label="Username"
+             aria-describedby="basic-addon1"
+             [(ngModel)]="inputSearch">
+      <button class="btn btn-outline-success"
+              type="button"
+              id="button-addon2"
+              (click)="btnSearchClick()">
+        <i class="fas fa-search fa-fw"></i> Buscar
+      </button>
+    </div>
+
+    <div class="alert alert-primary alert-primary-margin"
+         role="alert">
+      <h4 class="alert-heading text-center">
+        <i class="fas fa-info-circle 2x fa-fw"></i>
+        Informacion!
+      </h4>
+      <p class="text-center">
+        Escriba un pokemon, pulse <b>enter</b> o el boton <b>buscar</b>
+      </p>
+    </div>
+  </div>
+</div>
