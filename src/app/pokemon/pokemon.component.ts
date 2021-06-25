@@ -11,23 +11,46 @@ import { PokemonService } from '../service/pokemon.service';
 export class PokemonComponent {
 
   public inputSearch: string = "";
-  public poke: PokeDto[] = [];
+  public pokes: PokeDto[] = [];
+  public errorInfo: boolean = false;
+  public errorMessages: string[] = [];
+  public isLoading: boolean = false;
 
   constructor(private pokemonService: PokemonService) { }
 
   btnSearchClick() {
+    if (this.inputSearch == "") {
+      this.pokes = [];
+      this.errorInfo = false;
+      return;
+    }
+
+    this.isLoading = true;
+
     this.pokemonService.getPokemon(this.inputSearch)
         .subscribe(result => {
-          if (result.executedSuccesfully) {
-            this.poke = result.data;
-          } else {
-            //Mostrar error
-          }
-          
-          console.log(this.poke);
-        }, err => {
+          this.isLoading = false;
 
+          if (result.executedSuccesfully) {
+            this.pokes = result.data;
+            this.errorInfo = false;
+          } else {
+            this.errorMessages = result.messages;
+            this.pokes = [];
+            this.errorInfo = true;
+          }
+        }, err => {
+          this.isLoading = false;
+          this.errorMessages = ["Se ha Producido un Error. Contacte con su Administrador"];
+          this.pokes = [];
+          this.errorInfo = true;
         });
+  }
+
+  isEnter(e: any) {
+    if (e.keyCode === 13 && !e.shiftKey) {
+      this.btnSearchClick();
+    }
   }
 
 }
