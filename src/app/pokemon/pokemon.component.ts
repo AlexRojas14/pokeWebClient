@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { PokeDto } from '../dtos/poke.dto';
 
 import { PokemonService } from '../service/pokemon.service';
+
+import { PokeDto } from '../dtos/poke.dto';
 
 @Component({
   selector: 'app-pokemon',

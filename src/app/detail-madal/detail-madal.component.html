@@ -1,0 +1,103 @@
+<button class="btn btn-info btn-sm"
+        title="Detalle"
+        (click)="openModal()">
+  <i class="fas fa-eye"></i>
+</button>
+
+<modal #myModal>
+  <modal-header>
+    <h2>
+      <img src="../../assets/img/pokebola.png" width="40" height="40">
+      {{ poke.name }}
+    </h2>
+  </modal-header>
+  <modal-content>
+    <div class="row">
+      <div class="col-8">
+        <div class="mb-3">
+          <label class="form-label">Experiencia</label>
+          <input type="text" class="form-control" disabled [(ngModel)]="poke.base_experience">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Altura</label>
+          <input type="text" class="form-control" disabled [(ngModel)]="poke.height">
+        </div>
+      </div>
+      <div class="col-4 text-center">
+        <button class="btn btn-link"
+                (click)="closeModal()">
+          <i class="fas fa-download fa-fw"></i>
+          Descargar Detalle
+        </button>
+        <ngb-carousel>
+          <ng-template *ngIf="poke.sprites.front_default" ngbSlide>
+            <div class="picsum-img-wrapper">
+              <img [src]="poke.sprites.front_default" class="img-sizes">
+            </div>
+          </ng-template>
+          <ng-template *ngIf="poke.sprites.back_default" ngbSlide>
+            <div class="picsum-img-wrapper">
+              <img [src]="poke.sprites.back_default" class="img-sizes">
+            </div>
+          </ng-template>
+          <ng-template *ngIf="poke.sprites.front_shiny" ngbSlide>
+            <div class="picsum-img-wrapper">
+              <img [src]="poke.sprites.front_shiny" class="img-sizes">
+            </div>
+          </ng-template>
+          <ng-template *ngIf="poke.sprites.back_shiny" ngbSlide>
+            <div class="picsum-img-wrapper">
+              <img [src]="poke.sprites.back_shiny" class="img-sizes">
+            </div>
+          </ng-template>
+        </ngb-carousel>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="mb-3">
+          <label class="form-label">Peso</label>
+          <input type="text" class="form-control" disabled [(ngModel)]="poke.weight">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Predeterminado</label>
+          <input type="text" class="form-control" disabled [(ngModel)]="poke.is_default">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Orden</label>
+          <input type="text" class="form-control" disabled [(ngModel)]="poke.order">
+        </div>
+      </div>
+    </div>
+    
+    <hr style="margin-left: 50px; margin-right: 50px;">
+    <h4 class="text-center">Habilidades</h4>
+
+    <div class="row">
+      <div class="col-12">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Nombre</th>
+              <th scope="col">Es Oculta</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let ability of poke.abilities">
+              <td>{{ ability.ability.name }}</td>
+              <td>{{ ability.is_hidden ? "Verdadero" : "Falso" }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </modal-content>
+  <modal-footer>
+    <button class="btn btn-danger"
+            (click)="closeModal()">
+      <i class="fas fa-times-circle"></i>
+      Cerrar
+    </button>
+  </modal-footer>
+</modal>
