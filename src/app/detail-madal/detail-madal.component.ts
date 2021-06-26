@@ -1,7 +1,10 @@
+import { ReportFileResponse } from './../dtos/ReportFileResponse.dto';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 
 import { ModalManager } from 'ngb-modal';
+
 import { PokeDto } from '../dtos/poke.dto';
+import { PokemonService } from '../service/pokemon.service';
 
 @Component({
   selector: 'app-detail-madal',
@@ -15,7 +18,10 @@ export class DetailMadalComponent implements OnInit {
   @Input() poke = new PokeDto();
   @ViewChild('myModal') myModal = new ViewChild('myModal');
 
-  constructor(private modalService: ModalManager) { }
+  constructor(
+              private modalService: ModalManager,
+              private pokemonService: PokemonService,
+             ) { }
 
   ngOnInit(): void {
   }
@@ -34,7 +40,26 @@ export class DetailMadalComponent implements OnInit {
     })
   }
 
+  downloadDetail() {
+    this.pokemonService.downloadDetail(this.poke.id)
+        .subscribe(data => {
+          this.processDownload(data);
+        }, error => {
+
+        });
+  }
+
   closeModal(){
     this.modalService.close(this.modalRef);
+  }
+
+  processDownload(data: ReportFileResponse) {
+    let url = window.URL.createObjectURL(data.FileContent);
+    let anchorDownload: HTMLAnchorElement = document.createElement('a');
+    anchorDownload.href = url;
+    anchorDownload.download = `Detalle_del_Pokemon_${this.poke.name}.txt`;
+    let node = document.body.appendChild(anchorDownload);
+    anchorDownload.click();
+    document.body.removeChild(node);
   }
 }
