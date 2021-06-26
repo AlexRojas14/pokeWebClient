@@ -1,6 +1,7 @@
 # PokeWebClient
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.5.
+[Node](https://nodejs.org/es/) version 14.17.1
 
 ## Development server
 
